@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Facil
   const btnFacil = document.querySelector(".btn-facil");
   btnFacil.addEventListener("click", () => {
+    const cartas = gridJogoFacil.querySelectorAll(".carta");
+    gridJogoFacil.append(...shuffleArray(cartas));
     dificuldade.classList.toggle("hide");
     jogo.classList.toggle("hide");
     jogo.style["display"] = "flex";
@@ -37,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("TIMER!!!");
       if (timeLeft <= 0) {
         clearInterval(countDown);
+        // win or lose
         return;
       }
       timeLeft--;
@@ -47,6 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Dificil
   const btnDificil = document.querySelector(".btn-dificil");
   btnDificil.addEventListener("click", () => {
+    const cartas = gridJogoDificil.querySelectorAll(".carta");
+    gridJogoDificil.append(...shuffleArray(cartas));
     dificuldade.classList.toggle("hide");
     jogo.classList.toggle("hide");
     jogo.style["display"] = "flex";
@@ -58,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const countDown = setInterval(() => {
       if (timeLeft <= 0) {
         clearInterval(countDown);
+        // win or lose
         return;
       }
       timeLeft--;
@@ -65,3 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   });
 });
+
+// Durstenfeld shuffle
+const shuffleArray = (array) => {
+  const newArray = new Array();
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    newArray.push(array[j]);
+  }
+  return newArray;
+};
