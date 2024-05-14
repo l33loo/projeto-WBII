@@ -18,4 +18,28 @@ document.addEventListener("DOMContentLoaded", () => {
     dificuldade.classList.toggle("hide");
     ecraInicial.classList.toggle("hide");
   });
+
+  const jogo = document.querySelector(".jogo");
+  const gridJogoFacil = document.querySelector(".grid-jogo-facil");
+  const gridJogoDificil = document.querySelector(".grid-jogo-dificil");
+
+  // Facil
+  const btnFacil = document.querySelector(".btn-facil");
+  btnFacil.addEventListener("click", () => {
+    dificuldade.classList.toggle("hide");
+    jogo.classList.toggle("hide");
+    jogo.style["display"] = "flex";
+    gridJogoDificil.style["display"] = "none";
+  });
+
+  // Dificil
+  const btnDificil = document.querySelector(".btn-dificil");
+  btnDificil.addEventListener("click", () => {
+    dificuldade.classList.toggle("hide");
+    jogo.classList.toggle("hide");
+    jogo.style["display"] = "flex";
+    gridJogoFacil.classList.toggle("hide");
+    gridJogoFacil.style["display"] = "none";
+    gridJogoDificil.classList.toggle("hide");
+  });
 });
