@@ -1,0 +1,251 @@
+@use "reset";
+
+@mixin transition {
+  transition: all 0.3s ease-in-out;
+}
+
+@font-face {
+  font-family: "Gameria";
+  src: url("../fonts/GAMERIA.woff") format("woff");
+}
+
+* {
+  font-family: "Gameria", sans-serif;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-100px);
+}
+
+main {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: url("../img/fundo.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: auto;
+}
+
+.ecra-inicial {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: inherit;
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  @include transition();
+}
+.logo-inicio {
+  width: 541px;
+  max-width: 100%;
+  margin-bottom: 4rem;
+}
+
+.btn {
+  color: white;
+  background: rgb(242, 172, 52);
+  background: linear-gradient(
+    45deg,
+    rgba(242, 172, 52, 1) 0%,
+    rgba(252, 118, 52, 1) 100%
+  );
+  padding: 1.5rem 3rem;
+  font-size: 28px;
+  border-radius: 6rem;
+  border: 3px solid #bf6b42;
+  text-shadow:
+    -2px -2px 0 #d17141,
+    2px -2px 0 #d17141,
+    -2px 2px 0 #d17141,
+    2px 2px 0 #d17141;
+  @include transition();
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.logo-top {
+  width: 215px;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  margin-left: -107px;
+}
+
+.dificuldade {
+  min-width: 100vw;
+  min-height: 100vh;
+  padding: 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  @include transition();
+  .container {
+    background-color: #203241;
+    padding: 4rem 6rem;
+    border-radius: 2rem;
+    .titulo {
+      color: #eed9b5;
+      font-size: 40px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .escolhas {
+      display: flex;
+      gap: 4rem;
+      button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        @include transition();
+        .texto-btn {
+          color: white;
+          font-size: 32px;
+        }
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+.jogo {
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow: scroll;
+  padding: 8rem 2rem 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  .grid-jogo-facil {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+  .grid-jogo-dificil {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+  }
+  .carta {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    width: 250px;
+    height: 314px;
+    cursor: pointer;
+    .verso,
+    .frente {
+      position: absolute;
+      top: 0;
+      left: 0;
+      backface-visibility: hidden;
+    }
+    .frente {
+      transform: rotateY(180deg);
+    }
+    &.flip {
+      transform: rotateY(180deg);
+    }
+  }
+  .timer {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #203241;
+    border: 5px solid white;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #ff4748;
+    font-size: 64px;
+  }
+}
+
+.mensagem {
+  height: 100vh;
+  width: 100vw;
+  overflow: scroll;
+  position: relative;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: black, $alpha: 0.25);
+    backdrop-filter: blur(20px);
+  }
+  .container {
+    position: relative;
+    z-index: 999;
+    background-color: #203241;
+    padding: 4rem 8rem;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    .msg-text {
+      color: #b2db34;
+      font-size: 64px;
+      text-align: center;
+    }
+  }
+  &.mensagem-derrota {
+    .container .msg-text {
+      color: #ff4748;
+    }
+  }
+}
+
+//Media Queries
+@media screen and (max-width: 1500px) {
+  .jogo .grid-jogo-dificil {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .jogo .grid-jogo-dificil {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .jogo .grid-jogo-dificil {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .jogo .grid-jogo-facil {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

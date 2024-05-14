@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MemoDaw</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main>
+      <!-- ECRÃ INICIAL -->
+      <div class="ecra-inicial">
+        <img src="img/cerebro.svg" alt="" class="cerebro" />
+        <img src="img/memodaw.png" alt="" class="logo-inicio" />
+        <button class="btn btn-novo-jogo">Novo Jogo</button>
+      </div>
+
+      <!-- ESCOLHA DA DIFICULDADE -->
+      <div class="dificuldade hide">
+        <img src="img/memodaw-top.png" alt="" class="logo-top" />
+        <div class="container">
+          <h3 class="titulo">Escolha a dificuldade</h3>
+          <div class="escolhas">
+            <button class="btn-facil">
+              <img src="img/btn-facil.svg" alt="" />
+              <span class="texto-btn">fácil</span>
+            </button>
+            <button class="btn-dificil">
+              <img src="img/btn-dificil.svg" alt="" />
+              <span class="texto-btn">Difícil</span>
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-voltar">Voltar</button>
+      </div>
+
+      <!-- JOGO -->
+      <div class="jogo hide" style="display: none">
+        <img src="img/memodaw-top.png" alt="" class="logo-top" />
+        <!-- GRID-JOGO-FÁCIL -->
+        <div class="grid-jogo-facil">
+          <div class="carta carta-1">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-1.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-2">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-2.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-3">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-3.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-1">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-1.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-2">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-2.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-3">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-3.svg" alt="" class="frente" />
+          </div>
+        </div>
+        <!-- GRID-JOGO-DIFÍCIL -->
+        <div class="grid-jogo-dificil hide">
+          <div class="carta carta-1">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-1.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-2">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-2.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-3">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-3.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-4">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-4.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-5">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-5.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-1">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-1.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-2">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-2.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-3">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-3.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-4">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-4.svg" alt="" class="frente" />
+          </div>
+          <div class="carta carta-5">
+            <img src="img/carta-back.svg" alt="" class="verso" />
+            <img src="img/carta-front-5.svg" alt="" class="frente" />
+          </div>
+        </div>
+        <button class="btn btn-terminar-jogo">Terminar Jogo</button>
+        <div class="timer">60</div>
+      </div>
+
+      <div class="mensagem mensagem-vitoria hide">
+        <div class="filter"></div>
+        <div class="container">
+          <img src="img/vitoria.svg" alt="" />
+          <h3 class="msg-text">Muito Bem!</h3>
+          <button class="btn">Novo Jogo</button>
+        </div>
+      </div>
+
+      <div class="mensagem mensagem-derrota hide">
+        <div class="filter"></div>
+        <div class="container">
+          <img src="img/derrota.svg" alt="" />
+          <h3 class="msg-text">Tenta Outra vez</h3>
+          <button class="btn">Novo Jogo</button>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.querySelectorAll(".carta").forEach((carta) => {
+        carta.addEventListener("click", function () {
+          carta.classList.toggle("flip");
+        });
+      });
+    </script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
