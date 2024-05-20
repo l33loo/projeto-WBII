@@ -92,8 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (pairsFound === 3) {
             //WIN!
+            clearInterval(countDown);
             const timeoutWin = setTimeout(() => {
-              clearInterval(countDown);
               console.log("WIN!");
               gridJogoFacil.classList.toggle("hide");
               document
