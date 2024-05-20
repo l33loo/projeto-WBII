@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnNovoJogo = document.querySelector(".btn-novo-jogo");
   const ecraInicial = document.querySelector(".ecra-inicial");
   const dificuldade = document.querySelector(".dificuldade");
-  const mensagemVitoria = document.querySelector(".mensagem-vitoria");
+  // const mensagemVitoria = document.querySelector(".mensagem-vitoria");
 
   // ECRÃ INICIAL
   btnNovoJogo.addEventListener("click", () => {
@@ -42,9 +42,18 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("TIMER!!!");
       if (timeLeft <= 0) {
         clearInterval(countDown);
+        // LOSE
         if (pairsFound < 3) {
           gridJogoFacil.classList.toggle("hide");
-          document.querySelector(".mensagem-derrota").classList.toggle("hide");
+          const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
+          const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
+          btnNovoJogo.addEventListener("click", () => {
+            // clear game
+            pairsFound = 0;
+            jogo.classList.toggle("hide");
+            mensagemDerrotaEl.classList.toggle("hide");
+            dificuldade.classList.toggle("hide");
+          });
           return;
         }
         return;
@@ -56,9 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let primeiraCarta;
     let secundaCarta;
     cartasShuffled.forEach((carta) => {
-      if (timeLeft <= 0) {
-        return;
-      }
+      // if (timeLeft <= 0) {
+      //   return;
+      // }
 
       carta.addEventListener("click", () => {
         if (carta.classList.contains("flip")) {
@@ -95,10 +104,22 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInterval(countDown);
             const timeoutWin = setTimeout(() => {
               console.log("WIN!");
-              gridJogoFacil.classList.toggle("hide");
-              document
-                .querySelector(".mensagem-vitoria")
-                .classList.toggle("hide");
+              jogo.classList.toggle("hide");
+              // gridJogoFacil.classList.toggle("hide");
+              const mensagemVictoriaEl =
+                document.querySelector(".mensagem-vitoria");
+              mensagemVictoriaEl.classList.toggle("hide");
+              const btnNovoJogo = mensagemVictoriaEl.querySelector("button");
+              cartas.forEach((carta) => {
+                carta.classList.remove("flip");
+                carta.classList.remove("matched");
+              });
+              btnNovoJogo.addEventListener("click", () => {
+                // clear game
+                pairsFound = 0;
+                mensagemVictoriaEl.classList.toggle("hide");
+                dificuldade.classList.toggle("hide");
+              });
               clearTimeout(timeoutWin);
             }, 2000);
           }
