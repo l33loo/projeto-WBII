@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnNovoJogo = document.querySelector(".btn-novo-jogo");
   const ecraInicial = document.querySelector(".ecra-inicial");
   const dificuldade = document.querySelector(".dificuldade");
-  // const mensagemVitoria = document.querySelector(".mensagem-vitoria");
+  const mensagemVictoriaEl = document.querySelector(".mensagem-vitoria");
+  const btnNovoJogoVictoria = mensagemVictoriaEl.querySelector("button");
+  const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
+  const btnNovoJogoDerrota = mensagemDerrotaEl.querySelector("button");
 
   // ECRÃ INICIAL
   btnNovoJogo.addEventListener("click", () => {
@@ -46,14 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (pairsFound < 3) {
           gridJogoFacil.classList.toggle("hide");
           const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
-          const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
-          btnNovoJogo.addEventListener("click", () => {
-            // clear game
-            pairsFound = 0;
-            jogo.classList.toggle("hide");
-            mensagemDerrotaEl.classList.toggle("hide");
-            dificuldade.classList.toggle("hide");
-          });
+          // const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
+          // btnNovoJogo.addEventListener("click", () => {
+          //   // clear game
+          //   pairsFound = 0;
+          //   jogo.classList.toggle("hide");
+          //   mensagemDerrotaEl.classList.toggle("hide");
+          //   dificuldade.classList.toggle("hide");
+          // });
           return;
         }
         return;
@@ -96,8 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
           primeiraCarta.classList.add("matched");
           carta.classList.add("matched");
           pairsFound++;
-          primeiraCarta = null;
-          secundaCarta = null;
+
+          const timeoutMatched = setTimeout(() => {
+            primeiraCarta = null;
+            secundaCarta = null;
+
+            clearTimeout(timeoutMatched);
+          }, 100);
 
           if (pairsFound === 3) {
             //WIN!
@@ -106,20 +114,15 @@ document.addEventListener("DOMContentLoaded", () => {
               console.log("WIN!");
               jogo.classList.toggle("hide");
               // gridJogoFacil.classList.toggle("hide");
-              const mensagemVictoriaEl =
-                document.querySelector(".mensagem-vitoria");
               mensagemVictoriaEl.classList.toggle("hide");
-              const btnNovoJogo = mensagemVictoriaEl.querySelector("button");
+              // clear game
+              pairsFound = 0;
               cartas.forEach((carta) => {
                 carta.classList.remove("flip");
                 carta.classList.remove("matched");
               });
-              btnNovoJogo.addEventListener("click", () => {
-                // clear game
-                pairsFound = 0;
-                mensagemVictoriaEl.classList.toggle("hide");
-                dificuldade.classList.toggle("hide");
-              });
+              primeiraCarta = null;
+              secundaCarta = null;
               clearTimeout(timeoutWin);
             }, 2000);
           }
@@ -172,6 +175,14 @@ document.addEventListener("DOMContentLoaded", () => {
       timer.textContent = timeLeft;
     }, 1000);
   });
+
+  // MENSAGEM VITÓRIA
+  btnNovoJogoVictoria.addEventListener("click", () => {
+    mensagemVictoriaEl.classList.toggle("hide");
+    dificuldade.classList.toggle("hide");
+  });
+
+  // MENSAGEM DERROTA
 });
 
 // Durstenfeld shuffle
