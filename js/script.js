@@ -201,11 +201,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // MENSAGEM VITÓRIA
   btnNovoJogoVictoria.addEventListener("click", () => {
-    mensagemVictoriaEl.classList.toggle("hide");
-    dificuldade.classList.toggle("hide");
+    mensagemVictoriaEl.classList.add("hide");
+    dificuldade.classList.remove("hide");
   });
 
   // MENSAGEM DERROTA
+  btnNovoJogoDerrota.addEventListener("click", () => {
+    mensagemDerrotaEl.classList.add("hide");
+    dificuldade.classList.remove("hide");
+  });
 });
 
 // Durstenfeld shuffle
