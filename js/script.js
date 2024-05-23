@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnNovoJogo = document.querySelector(".btn-novo-jogo");
   const ecraInicial = document.querySelector(".ecra-inicial");
   const dificuldade = document.querySelector(".dificuldade");
+  const btnTerminarJogo = document.querySelector(".btn-terminar-jogo");
   const mensagemVictoriaEl = document.querySelector(".mensagem-vitoria");
   const btnNovoJogoVictoria = mensagemVictoriaEl.querySelector("button");
   const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
@@ -27,6 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const gridJogoFacil = document.querySelector(".grid-jogo-facil");
   const gridJogoDificil = document.querySelector(".grid-jogo-dificil");
   const timer = document.querySelector(".timer");
+  let pairsFound = 0;
+  let primeiraCarta;
+  let secundaCarta;
 
   // Facil
   const btnFacil = document.querySelector(".btn-facil");
@@ -40,24 +44,23 @@ document.addEventListener("DOMContentLoaded", () => {
     gridJogoDificil.style["display"] = "none";
     let timeLeft = 60;
     timer.textContent = timeLeft;
-    let pairsFound = 0;
     const countDown = setInterval(() => {
       console.log("TIMER!!!");
       if (timeLeft <= 0) {
         clearInterval(countDown);
         // LOSE
         if (pairsFound < 3) {
-          gridJogoFacil.classList.toggle("hide");
-          const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
+          gridJogoFacil.classList.add("hide");
+          mensagemDerrotaEl.classList.remove("hide");
           // const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
           // btnNovoJogo.addEventListener("click", () => {
           //   // clear game
           //   pairsFound = 0;
-          //   jogo.classList.toggle("hide");
-          //   mensagemDerrotaEl.classList.toggle("hide");
+          jogo.classList.remove("hide");
+          jogo.style["display"] = "none";
+
           //   dificuldade.classList.toggle("hide");
           // });
-          return;
         }
         return;
       }
@@ -65,8 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
       timer.textContent = timeLeft;
     }, 1000);
 
-    let primeiraCarta;
-    let secundaCarta;
     cartasShuffled.forEach((carta) => {
       // if (timeLeft <= 0) {
       //   return;
@@ -86,13 +87,13 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
+        carta.classList.toggle("flip");
+
         if (!primeiraCarta) {
-          carta.classList.toggle("flip");
           primeiraCarta = carta;
           return;
         }
 
-        carta.classList.toggle("flip");
         secundaCarta = carta;
 
         if (carta.classList.value === primeiraCarta.classList.value) {
@@ -113,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const timeoutWin = setTimeout(() => {
               console.log("WIN!");
               jogo.classList.toggle("hide");
+              jogo.style["display"] = "none";
               // gridJogoFacil.classList.toggle("hide");
               mensagemVictoriaEl.classList.toggle("hide");
               // clear game
@@ -131,8 +133,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const timeoutFlip = setTimeout(() => {
           console.log("this is the third message");
-          primeiraCarta.classList.toggle("flip");
-          carta.classList.toggle("flip");
+          primeiraCarta.classList.remove("flip");
+          carta.classList.remove("flip");
           primeiraCarta = null;
           secundaCarta = null;
 
@@ -174,6 +176,27 @@ document.addEventListener("DOMContentLoaded", () => {
       timeLeft--;
       timer.textContent = timeLeft;
     }, 1000);
+  });
+
+  // TERMINAR JOGO
+  btnTerminarJogo.addEventListener("click", () => {
+    jogo.classList.add("hide");
+    jogo.style["display"] = "none";
+    gridJogoFacil.classList.remove("hide");
+    gridJogoFacil.style["display"] = "grid";
+    gridJogoDificil.classList.add("hide");
+    ecraInicial.classList.remove("hide");
+
+    // clear game
+    pairsFound = 0;
+    primeiraCarta = null;
+    secundaCarta = null;
+    // TODO: Maybe just target the latest game mode
+    const cartas = document.querySelectorAll(".carta");
+    cartas.forEach((carta) => {
+      carta.classList.remove("flip");
+      carta.classList.remove("matched");
+    });
   });
 
   // MENSAGEM VITÓRIA
