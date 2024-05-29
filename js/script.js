@@ -113,10 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInterval(countDown);
             const timeoutWin = setTimeout(() => {
               console.log("WIN!");
-              jogo.classList.toggle("hide");
+              jogo.classList.add("hide");
               jogo.style["display"] = "none";
               // gridJogoFacil.classList.toggle("hide");
-              mensagemVictoriaEl.classList.toggle("hide");
+              mensagemVictoriaEl.classList.remove("hide");
               // clear game
               pairsFound = 0;
               cartas.forEach((carta) => {
