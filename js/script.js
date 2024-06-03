@@ -56,10 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
           // btnNovoJogo.addEventListener("click", () => {
           //   // clear game
           //   pairsFound = 0;
-          jogo.classList.add("hide");
-          jogo.style["display"] = "none";
-          gridJogoFacil.classList.add("hide");
-          gridJogoFacil.style["display"] = "none";
+
+          // TODO: flip all cards, remove clock and btn
           mensagemDerrotaEl.classList.remove("hide");
 
           //   dificuldade.classList.toggle("hide");
@@ -115,15 +113,14 @@ document.addEventListener("DOMContentLoaded", () => {
           if (pairsFound === 3) {
             console.log(`WIN! pairs found: ${pairsFound}`);
             //WIN!
+
+            //TODO: flip cards and hide timer and
             clearInterval(countDown);
             const timeoutWin = setTimeout(() => {
               console.log("WIN!");
-              jogo.classList.add("hide");
-              jogo.style["display"] = "none";
               // gridJogoFacil.classList.toggle("hide");
               mensagemVitoriaEl.classList.remove("hide");
               // clear game
-              pairsFound = 0;
               cartas.forEach((carta) => {
                 carta.classList.remove("flip");
                 carta.classList.remove("matched");
@@ -175,12 +172,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // MENSAGEM VITÓRIA
   btnNovoJogoVitoria.addEventListener("click", () => {
+    primeiraCarta = null;
+    secundaCarta = null;
+    pairsFound = 0;
+    jogo.classList.add("hide");
+    jogo.style["display"] = "none";
     mensagemVitoriaEl.classList.add("hide");
     dificuldade.classList.remove("hide");
   });
 
   // MENSAGEM DERROTA
   btnNovoJogoDerrota.addEventListener("click", () => {
+    primeiraCarta = null;
+    secundaCarta = null;
+    pairsFound = 0;
+    jogo.classList.add("hide");
+    jogo.style["display"] = "none";
+    gridJogoFacil.classList.add("hide");
+    gridJogoFacil.style["display"] = "none";
     mensagemDerrotaEl.classList.add("hide");
     dificuldade.classList.remove("hide");
   });
