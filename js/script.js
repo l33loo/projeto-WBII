@@ -58,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
           //   pairsFound = 0;
 
           // TODO: flip all cards, remove clock and btn
+          btnTerminarJogo.classList.add("hide");
+          timer.classList.add("hide");
           mensagemDerrotaEl.classList.remove("hide");
 
           //   dificuldade.classList.toggle("hide");
@@ -120,13 +122,13 @@ document.addEventListener("DOMContentLoaded", () => {
               console.log("WIN!");
               // gridJogoFacil.classList.toggle("hide");
               mensagemVitoriaEl.classList.remove("hide");
+              btnTerminarJogo.classList.add("hide");
+              timer.classList.add("hide");
               // clear game
               cartas.forEach((carta) => {
                 carta.classList.remove("flip");
                 carta.classList.remove("matched");
               });
-              primeiraCarta = null;
-              secundaCarta = null;
               clearTimeout(timeoutWin);
             }, 2000);
           }
