@@ -6,22 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const ecraInicial = document.querySelector(".ecra-inicial");
   const dificuldade = document.querySelector(".dificuldade");
   const btnTerminarJogo = document.querySelector(".btn-terminar-jogo");
-  const mensagemVictoriaEl = document.querySelector(".mensagem-vitoria");
-  const btnNovoJogoVictoria = mensagemVictoriaEl.querySelector("button");
+  const mensagemVitoriaEl = document.querySelector(".mensagem-vitoria");
+  const btnNovoJogoVitoria = mensagemVitoriaEl.querySelector("button");
   const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
   const btnNovoJogoDerrota = mensagemDerrotaEl.querySelector("button");
 
   // ECRÃ INICIAL
   btnNovoJogo.addEventListener("click", () => {
-    ecraInicial.classList.toggle("hide");
-    dificuldade.classList.toggle("hide");
+    ecraInicial.classList.add("hide");
+    dificuldade.classList.remove("hide");
   });
 
   // ESCOLHA DA DIFICULDADE
   const btnVoltar = document.querySelector(".btn-voltar");
   btnVoltar.addEventListener("click", () => {
-    dificuldade.classList.toggle("hide");
-    ecraInicial.classList.toggle("hide");
+    dificuldade.classList.add("hide");
+    ecraInicial.classList.remove("hide");
   });
 
   const jogo = document.querySelector(".jogo");
@@ -38,30 +38,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartas = gridJogoFacil.querySelectorAll(".carta");
     gridJogoFacil.append(...shuffleArray(cartas));
     const cartasShuffled = gridJogoFacil.querySelectorAll(".carta");
-    dificuldade.classList.toggle("hide");
-    jogo.classList.toggle("hide");
+    dificuldade.classList.add("hide");
+    jogo.classList.remove("hide");
     jogo.style["display"] = "flex";
+    gridJogoFacil.style["display"] = "grid";
+    gridJogoFacil.classList.remove("hide");
     gridJogoDificil.style["display"] = "none";
-    let timeLeft = 60;
+    // let timeLeft = 60;
+    let timeLeft = 15;
     timer.textContent = timeLeft;
     const countDown = setInterval(() => {
       console.log("TIMER!!!");
       if (timeLeft <= 0) {
-        clearInterval(countDown);
         // LOSE
         if (pairsFound < 3) {
-          gridJogoFacil.classList.add("hide");
-          mensagemDerrotaEl.classList.remove("hide");
           // const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
           // btnNovoJogo.addEventListener("click", () => {
           //   // clear game
           //   pairsFound = 0;
-          jogo.classList.remove("hide");
+          jogo.classList.add("hide");
           jogo.style["display"] = "none";
+          gridJogoFacil.classList.add("hide");
+          gridJogoFacil.style["display"] = "none";
+          mensagemDerrotaEl.classList.remove("hide");
 
           //   dificuldade.classList.toggle("hide");
           // });
         }
+        clearInterval(countDown);
         return;
       }
       timeLeft--;
@@ -109,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }, 100);
 
           if (pairsFound === 3) {
+            console.log(`WIN! pairs found: ${pairsFound}`);
             //WIN!
             clearInterval(countDown);
             const timeoutWin = setTimeout(() => {
@@ -116,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
               jogo.classList.add("hide");
               jogo.style["display"] = "none";
               // gridJogoFacil.classList.toggle("hide");
-              mensagemVictoriaEl.classList.remove("hide");
+              mensagemVitoriaEl.classList.remove("hide");
               // clear game
               pairsFound = 0;
               cartas.forEach((carta) => {
@@ -154,29 +159,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Dificil
-  const btnDificil = document.querySelector(".btn-dificil");
-  btnDificil.addEventListener("click", () => {
-    const cartas = gridJogoDificil.querySelectorAll(".carta");
-    gridJogoDificil.append(...shuffleArray(cartas));
-    dificuldade.classList.toggle("hide");
-    jogo.classList.toggle("hide");
-    jogo.style["display"] = "flex";
-    gridJogoFacil.classList.toggle("hide");
-    gridJogoFacil.style["display"] = "none";
-    gridJogoDificil.classList.toggle("hide");
-    let timeLeft = 30;
-    timer.textContent = timeLeft;
-    const countDown = setInterval(() => {
-      if (timeLeft <= 0) {
-        clearInterval(countDown);
-        gridJogoFacil.classList.toggle("hide");
-        document.querySelector(".mensagem-derrota").classList.toggle("hide");
-        return;
-      }
-      timeLeft--;
-      timer.textContent = timeLeft;
-    }, 1000);
-  });
+  // const btnDificil = document.querySelector(".btn-dificil");
+  // btnDificil.addEventListener("click", () => {
+  //   const cartas = gridJogoDificil.querySelectorAll(".carta");
+  //   gridJogoDificil.append(...shuffleArray(cartas));
+  //   dificuldade.classList.add("hide");
+  //   gridJogoFacil.classList.add("hide");
+  //   gridJogoFacil.style["display"] = "none";
+  //   jogo.classList.remove("hide");
+  //   jogo.style["display"] = "flex";
+  //   gridJogoDificil.classList.remove("hide");
+  //   let timeLeft = 30;
+  //   timer.textContent = timeLeft;
+  //   const countDown = setInterval(() => {
+  //     if (timeLeft <= 0) {
+  //       clearInterval(countDown);
+  //       gridJogoFacil.classList.add("hide");
+  //       mensagemDerrotaEl.classList.remove("hide");
+  //       return;
+  //     }
+  //     timeLeft--;
+  //     timer.textContent = timeLeft;
+  //   }, 1000);
+  // });
 
   // TERMINAR JOGO
   btnTerminarJogo.addEventListener("click", () => {
@@ -185,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
     gridJogoFacil.classList.remove("hide");
     gridJogoFacil.style["display"] = "grid";
     gridJogoDificil.classList.add("hide");
+    gridJogoDificil.style["display"] = "none";
     ecraInicial.classList.remove("hide");
 
     // clear game
@@ -200,8 +206,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // MENSAGEM VITÓRIA
-  btnNovoJogoVictoria.addEventListener("click", () => {
-    mensagemVictoriaEl.classList.add("hide");
+  btnNovoJogoVitoria.addEventListener("click", () => {
+    mensagemVitoriaEl.classList.add("hide");
     dificuldade.classList.remove("hide");
   });
 
