@@ -149,39 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("FLIP!");
       });
     });
-
-    // while (timeLeft >= 0) {
-    //   if (pairsFound === 3) {
-    //     jogo.classList.toggle("hide");
-    //     mensagemVitoria.classList.toggle("hide");
-    //   }
-    // }
   });
-
-  // Dificil
-  // const btnDificil = document.querySelector(".btn-dificil");
-  // btnDificil.addEventListener("click", () => {
-  //   const cartas = gridJogoDificil.querySelectorAll(".carta");
-  //   gridJogoDificil.append(...shuffleArray(cartas));
-  //   dificuldade.classList.add("hide");
-  //   gridJogoFacil.classList.add("hide");
-  //   gridJogoFacil.style["display"] = "none";
-  //   jogo.classList.remove("hide");
-  //   jogo.style["display"] = "flex";
-  //   gridJogoDificil.classList.remove("hide");
-  //   let timeLeft = 30;
-  //   timer.textContent = timeLeft;
-  //   const countDown = setInterval(() => {
-  //     if (timeLeft <= 0) {
-  //       clearInterval(countDown);
-  //       gridJogoFacil.classList.add("hide");
-  //       mensagemDerrotaEl.classList.remove("hide");
-  //       return;
-  //     }
-  //     timeLeft--;
-  //     timer.textContent = timeLeft;
-  //   }, 1000);
-  // });
 
   // TERMINAR JOGO
   btnTerminarJogo.addEventListener("click", () => {
