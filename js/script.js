@@ -34,105 +34,7 @@ btnVoltar.addEventListener("click", () => {
 });
 
 // Facil
-btnFacil.addEventListener(
-  "click",
-  () => {
-    cartas = gridJogoFacil.querySelectorAll(".carta");
-    gridJogoFacil.append(...shuffleArray(cartas));
-    dificuldade.classList.add("hide");
-    jogo.classList.remove("hide");
-    jogo.style["display"] = "flex";
-    gridJogoFacil.style["display"] = "grid";
-    gridJogoFacil.classList.remove("hide");
-    gridJogoDificil.style["display"] = "none";
-    // let timeLeft = 60;
-    timeLeft = 15;
-    timer.textContent = timeLeft;
-    countDown = setInterval(timerInterval, 1000);
-
-    cartas.forEach((carta) => {
-      carta.addEventListener(
-        "click",
-        (event) => {
-          // Get other event listener in HTML file to be ignored
-          event.stopPropagation();
-
-          // Cannot unflip a card
-          if (carta.classList.contains("flip")) {
-            return;
-          }
-
-          // Cannot flip other cards when two are already flipped
-          if (!!primeiraCarta && !!secundaCarta) {
-            return;
-          }
-
-          // Cannot unflip a card that is part of a matched pair
-          if (carta.classList.contains("matched")) {
-            return;
-          }
-
-          carta.classList.toggle("flip");
-
-          // First card is being flipped
-          if (!primeiraCarta) {
-            primeiraCarta = carta;
-            return;
-          }
-
-          // Second card is being flipped
-          secundaCarta = carta;
-
-          // The two cards are a match
-          if (carta.classList.value === primeiraCarta.classList.value) {
-            primeiraCarta.classList.add("matched");
-            carta.classList.add("matched");
-            pairsFound++;
-
-            // Don't let players flip new cards right away
-            const timeoutMatched = setTimeout(() => {
-              primeiraCarta = null;
-              secundaCarta = null;
-
-              clearTimeout(timeoutMatched);
-            }, 100);
-
-            // WIN
-            if (pairsFound === cartas.length / 2) {
-              clearTimer();
-
-              const timeoutWin = setTimeout(() => {
-                mensagemVitoriaEl.classList.remove("hide");
-                btnTerminarJogo.classList.add("hide");
-                timer.classList.add("hide");
-                // clear cards
-                cartas.forEach((carta) => {
-                  carta.classList.remove("flip");
-                  carta.classList.remove("matched");
-                });
-                clearTimeout(timeoutWin);
-              }, 2000);
-            }
-            return;
-          }
-
-          // Cards are not a match
-          const timeoutFlip = setTimeout(() => {
-            primeiraCarta.classList.remove("flip");
-            carta.classList.remove("flip");
-            primeiraCarta = null;
-            secundaCarta = null;
-
-            clearTimeout(timeoutFlip);
-          }, 1200);
-        },
-        // Get other event listener in HTML file to be ignored
-        true
-      );
-    });
-  },
-  true
-);
+btnFacil.addEventListener("click", playGame, true);
 
 // TERMINAR JOGO
 btnTerminarJogo.addEventListener("click", () => {
@@ -189,16 +91,16 @@ btnNovoJogoDerrota.addEventListener("click", () => {
 });
 
 // Durstenfeld shuffle
-const shuffleArray = (array) => {
+function shuffleArray(array) {
   const newArray = new Array();
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     newArray.push(array[j]);
   }
   return newArray;
-};
+}
 
-const timerInterval = () => {
+function timerInterval() {
   if (timeLeft <= 0) {
     // LOSE
     if (pairsFound < 3) {
@@ -215,9 +117,106 @@ const timerInterval = () => {
   }
   timeLeft--;
   timer.textContent = timeLeft;
-};
+}
 
 const clearTimer = () => {
   clearInterval(countDown);
   // countDown = null;
 };
+
+function playGame($isGameModeFacil = true) {
+  const gridJogo = $isGameModeFacil ? gridJogoFacil : gridJogoDificil;
+  timeLeft = $isGameModeFacil ? 15 : 30;
+  cartas = gridJogo.querySelectorAll(".carta");
+  gridJogo.append(...shuffleArray(cartas));
+  dificuldade.classList.add("hide");
+  jogo.classList.remove("hide");
+  jogo.style["display"] = "flex";
+  gridJogo.style["display"] = "grid";
+  gridJogo.classList.remove("hide");
+  gridJogoDificil.style["display"] = "none";
+
+  timer.textContent = timeLeft;
+  countDown = setInterval(timerInterval, 1000);
+
+  cartas.forEach((carta) => {
+    carta.addEventListener(
+      "click",
+      (event) => {
+        // Get other event listener in HTML file to be ignored
+        event.stopPropagation();
+
+        // Cannot unflip a card
+        if (carta.classList.contains("flip")) {
+          return;
+        }
+
+        // Cannot flip other cards when two are already flipped
+        if (!!primeiraCarta && !!secundaCarta) {
+          return;
+        }
+
+        // Cannot unflip a card that is part of a matched pair
+        if (carta.classList.contains("matched")) {
+          return;
+        }
+
+        carta.classList.toggle("flip");
+
+        // First card is being flipped
+        if (!primeiraCarta) {
+          primeiraCarta = carta;
+          return;
+        }
+
+        // Second card is being flipped
+        secundaCarta = carta;
+
+        // The two cards are a match
+        if (carta.classList.value === primeiraCarta.classList.value) {
+          primeiraCarta.classList.add("matched");
+          carta.classList.add("matched");
+          pairsFound++;
+
+          // Don't let players flip new cards right away
+          const timeoutMatched = setTimeout(() => {
+            primeiraCarta = null;
+            secundaCarta = null;
+
+            clearTimeout(timeoutMatched);
+          }, 100);
+
+          // WIN
+          if (pairsFound === cartas.length / 2) {
+            clearTimer();
+
+            const timeoutWin = setTimeout(() => {
+              mensagemVitoriaEl.classList.remove("hide");
+              btnTerminarJogo.classList.add("hide");
+              timer.classList.add("hide");
+              // clear cards
+              cartas.forEach((carta) => {
+                carta.classList.remove("flip");
+                carta.classList.remove("matched");
+              });
+              clearTimeout(timeoutWin);
+            }, 2000);
+          }
+          return;
+        }
+
+        // Cards are not a match
+        const timeoutFlip = setTimeout(() => {
+          primeiraCarta.classList.remove("flip");
+          carta.classList.remove("flip");
+          primeiraCarta = null;
+          secundaCarta = null;
+
+          clearTimeout(timeoutFlip);
+        }, 1200);
+      },
+      // Get other event listener in HTML file to be ignored
+      true
+    );
+  });
+}
