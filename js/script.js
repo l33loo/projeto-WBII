@@ -5,9 +5,12 @@ const ecraInicial = document.querySelector(".ecra-inicial");
 const dificuldade = document.querySelector(".dificuldade");
 const btnVoltar = document.querySelector(".btn-voltar");
 const btnFacil = document.querySelector(".btn-facil");
+const btnDificil = document.querySelector(".btn-dificil");
 const jogo = document.querySelector(".jogo");
 const gridJogoFacil = document.querySelector(".grid-jogo-facil");
+const cartasFacil = gridJogoFacil.querySelectorAll(".carta");
 const gridJogoDificil = document.querySelector(".grid-jogo-dificil");
+const cartasDificil = gridJogoDificil.querySelectorAll(".carta");
 const timer = document.querySelector(".timer");
 let cartas;
 let pairsFound = 0;
@@ -36,13 +39,22 @@ btnVoltar.addEventListener("click", () => {
 // Facil
 btnFacil.addEventListener("click", playGame, true);
 
+// Dificil
+btnDificil.addEventListener(
+  "click",
+  () => {
+    playGame(false);
+  },
+  true
+);
+
 // TERMINAR JOGO
 btnTerminarJogo.addEventListener("click", () => {
   clearTimer();
   jogo.classList.add("hide");
   jogo.style["display"] = "none";
   gridJogoFacil.classList.remove("hide");
-  gridJogoFacil.style["display"] = "grid";
+  gridJogoFacil.style["display"] = "none";
   gridJogoDificil.classList.add("hide");
   gridJogoDificil.style["display"] = "none";
   ecraInicial.classList.remove("hide");
@@ -84,6 +96,8 @@ btnNovoJogoDerrota.addEventListener("click", () => {
   jogo.style["display"] = "none";
   gridJogoFacil.classList.add("hide");
   gridJogoFacil.style["display"] = "none";
+  gridJogoDificil.classList.add("hide");
+  gridJogoDificil.style["display"] = "none";
   mensagemDerrotaEl.classList.add("hide");
   dificuldade.classList.remove("hide");
   btnTerminarJogo.classList.remove("hide");
@@ -127,14 +141,19 @@ const clearTimer = () => {
 function playGame($isGameModeFacil = true) {
   const gridJogo = $isGameModeFacil ? gridJogoFacil : gridJogoDificil;
   timeLeft = $isGameModeFacil ? 15 : 30;
-  cartas = gridJogo.querySelectorAll(".carta");
+  cartas = $isGameModeFacil ? cartasFacil : cartasDificil;
   gridJogo.append(...shuffleArray(cartas));
   dificuldade.classList.add("hide");
   jogo.classList.remove("hide");
   jogo.style["display"] = "flex";
   gridJogo.style["display"] = "grid";
   gridJogo.classList.remove("hide");
-  gridJogoDificil.style["display"] = "none";
+
+  if ($isGameModeFacil) {
+    gridJogoDificil.style["display"] = "none";
+  } else {
+    gridJogoFacil.style["display"] = "none";
+  }
 
   timer.textContent = timeLeft;
   countDown = setInterval(timerInterval, 1000);
