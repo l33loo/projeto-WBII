@@ -34,121 +34,132 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Facil
   const btnFacil = document.querySelector(".btn-facil");
-  btnFacil.addEventListener("click", () => {
-    const cartas = gridJogoFacil.querySelectorAll(".carta");
-    gridJogoFacil.append(...shuffleArray(cartas));
-    const cartasShuffled = gridJogoFacil.querySelectorAll(".carta");
-    dificuldade.classList.add("hide");
-    jogo.classList.remove("hide");
-    jogo.style["display"] = "flex";
-    gridJogoFacil.style["display"] = "grid";
-    gridJogoFacil.classList.remove("hide");
-    gridJogoDificil.style["display"] = "none";
-    // let timeLeft = 60;
-    let timeLeft = 15;
-    timer.textContent = timeLeft;
-    const countDown = setInterval(() => {
-      console.log("TIMER!!!");
-      if (timeLeft <= 0) {
-        // LOSE
-        if (pairsFound < 3) {
-          // const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
-          // btnNovoJogo.addEventListener("click", () => {
-          //   // clear game
-          //   pairsFound = 0;
-
-          // TODO: flip all cards, remove clock and btn
-          btnTerminarJogo.classList.add("hide");
-          timer.classList.add("hide");
-          mensagemDerrotaEl.classList.remove("hide");
-
-          //   dificuldade.classList.toggle("hide");
-          // });
-        }
-        clearInterval(countDown);
-        return;
-      }
-      timeLeft--;
+  btnFacil.addEventListener(
+    "click",
+    () => {
+      const cartas = gridJogoFacil.querySelectorAll(".carta");
+      gridJogoFacil.append(...shuffleArray(cartas));
+      const cartasShuffled = gridJogoFacil.querySelectorAll(".carta");
+      dificuldade.classList.add("hide");
+      jogo.classList.remove("hide");
+      jogo.style["display"] = "flex";
+      gridJogoFacil.style["display"] = "grid";
+      gridJogoFacil.classList.remove("hide");
+      gridJogoDificil.style["display"] = "none";
+      // let timeLeft = 60;
+      let timeLeft = 15;
       timer.textContent = timeLeft;
-    }, 1000);
+      const countDown = setInterval(() => {
+        console.log("TIMER!!!");
+        if (timeLeft <= 0) {
+          // LOSE
+          if (pairsFound < 3) {
+            // const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
+            // btnNovoJogo.addEventListener("click", () => {
+            //   // clear game
+            //   pairsFound = 0;
 
-    cartasShuffled.forEach((carta) => {
-      // if (timeLeft <= 0) {
-      //   return;
-      // }
+            // TODO: flip all cards, remove clock and btn
+            btnTerminarJogo.classList.add("hide");
+            timer.classList.add("hide");
+            mensagemDerrotaEl.classList.remove("hide");
 
-      carta.addEventListener("click", () => {
-        if (carta.classList.contains("flip")) {
-          return;
-        }
-
-        if (!!primeiraCarta && !!secundaCarta) {
-          return;
-        }
-
-        if (carta.classList.contains("matched")) {
-          console.log("CONTAINS `MATCHED`!!!");
-          return;
-        }
-
-        carta.classList.toggle("flip");
-
-        if (!primeiraCarta) {
-          primeiraCarta = carta;
-          return;
-        }
-
-        secundaCarta = carta;
-
-        if (carta.classList.value === primeiraCarta.classList.value) {
-          primeiraCarta.classList.add("matched");
-          carta.classList.add("matched");
-          pairsFound++;
-
-          const timeoutMatched = setTimeout(() => {
-            primeiraCarta = null;
-            secundaCarta = null;
-
-            clearTimeout(timeoutMatched);
-          }, 100);
-
-          if (pairsFound === 3) {
-            console.log(`WIN! pairs found: ${pairsFound}`);
-            //WIN!
-
-            //TODO: flip cards and hide timer and
-            clearInterval(countDown);
-            const timeoutWin = setTimeout(() => {
-              console.log("WIN!");
-              // gridJogoFacil.classList.toggle("hide");
-              mensagemVitoriaEl.classList.remove("hide");
-              btnTerminarJogo.classList.add("hide");
-              timer.classList.add("hide");
-              // clear game
-              cartas.forEach((carta) => {
-                carta.classList.remove("flip");
-                carta.classList.remove("matched");
-              });
-              clearTimeout(timeoutWin);
-            }, 2000);
+            //   dificuldade.classList.toggle("hide");
+            // });
           }
+          clearInterval(countDown);
           return;
         }
+        timeLeft--;
+        timer.textContent = timeLeft;
+      }, 1000);
 
-        const timeoutFlip = setTimeout(() => {
-          console.log("this is the third message");
-          primeiraCarta.classList.remove("flip");
-          carta.classList.remove("flip");
-          primeiraCarta = null;
-          secundaCarta = null;
+      cartasShuffled.forEach((carta) => {
+        // if (timeLeft <= 0) {
+        //   return;
+        // }
 
-          clearTimeout(timeoutFlip);
-        }, 2000);
+        carta.addEventListener(
+          "click",
+          (event) => {
+            // event.preventDefault();
+            event.stopPropagation();
 
-        console.log("FLIP!");
+            if (carta.classList.contains("flip")) {
+              return;
+            }
+
+            if (!!primeiraCarta && !!secundaCarta) {
+              return;
+            }
+
+            if (carta.classList.contains("matched")) {
+              console.log("CONTAINS `MATCHED`!!!");
+              return;
+            }
+
+            carta.classList.toggle("flip");
+
+            if (!primeiraCarta) {
+              primeiraCarta = carta;
+              return;
+            }
+
+            secundaCarta = carta;
+
+            if (carta.classList.value === primeiraCarta.classList.value) {
+              primeiraCarta.classList.add("matched");
+              carta.classList.add("matched");
+              pairsFound++;
+
+              const timeoutMatched = setTimeout(() => {
+                primeiraCarta = null;
+                secundaCarta = null;
+
+                clearTimeout(timeoutMatched);
+              }, 100);
+
+              if (pairsFound === 3) {
+                console.log(`WIN! pairs found: ${pairsFound}`);
+                //WIN!
+
+                //TODO: flip cards and hide timer and
+                clearInterval(countDown);
+                const timeoutWin = setTimeout(() => {
+                  console.log("WIN!");
+                  // gridJogoFacil.classList.toggle("hide");
+                  mensagemVitoriaEl.classList.remove("hide");
+                  btnTerminarJogo.classList.add("hide");
+                  timer.classList.add("hide");
+                  // clear game
+                  cartas.forEach((carta) => {
+                    carta.classList.remove("flip");
+                    carta.classList.remove("matched");
+                  });
+                  clearTimeout(timeoutWin);
+                }, 2000);
+              }
+              return;
+            }
+
+            const timeoutFlip = setTimeout(() => {
+              console.log("this is the third message");
+              primeiraCarta.classList.remove("flip");
+              carta.classList.remove("flip");
+              primeiraCarta = null;
+              secundaCarta = null;
+
+              clearTimeout(timeoutFlip);
+            }, 2000);
+
+            console.log("FLIP!");
+          },
+          true
+        );
       });
-    });
-  });
+    },
+    true
+  );
 
   // TERMINAR JOGO
   btnTerminarJogo.addEventListener("click", () => {
@@ -181,6 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
     jogo.style["display"] = "none";
     mensagemVitoriaEl.classList.add("hide");
     dificuldade.classList.remove("hide");
+    btnTerminarJogo.classList.remove("hide");
+    timer.classList.remove("hide");
   });
 
   // MENSAGEM DERROTA
@@ -194,6 +207,8 @@ document.addEventListener("DOMContentLoaded", () => {
     gridJogoFacil.style["display"] = "none";
     mensagemDerrotaEl.classList.add("hide");
     dificuldade.classList.remove("hide");
+    btnTerminarJogo.classList.remove("hide");
+    timer.classList.remove("hide");
   });
 });
 
