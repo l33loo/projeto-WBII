@@ -144,6 +144,9 @@ function playGame($isGameModeFacil = true) {
   jogo.style["display"] = "flex";
   gridJogo.style["display"] = "grid";
   gridJogo.classList.remove("hide");
+  // TODO: make it disabled or hidden as soon as game is over
+  btnTerminarJogo.classList.remove("hide");
+  timer.classList.remove("hide");
 
   if ($isGameModeFacil) {
     gridJogoDificil.style["display"] = "none";
@@ -244,7 +247,4 @@ function clearGame() {
   jogo.classList.add("hide");
   jogo.style["display"] = "none";
   dificuldade.classList.remove("hide");
-  // TODO: make it disabled or hidden as soon as game is over
-  btnTerminarJogo.classList.remove("hide");
-  timer.classList.remove("hide");
 }
