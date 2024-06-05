@@ -207,6 +207,7 @@ function playGame($isGameModeFacil = true) {
           // WIN
           if (pairsFound === cartas.length / 2) {
             clearTimer();
+            btnTerminarJogo.classList.add("hide");
 
             const timeoutWin = setTimeout(() => {
               mensagemVitoriaEl.classList.remove("hide");
