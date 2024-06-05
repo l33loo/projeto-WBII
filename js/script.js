@@ -81,6 +81,7 @@ btnNovoJogoVitoria.addEventListener("click", () => {
   jogo.style["display"] = "none";
   mensagemVitoriaEl.classList.add("hide");
   dificuldade.classList.remove("hide");
+  // TODO: make it disabled or hidden as soon as game is over
   btnTerminarJogo.classList.remove("hide");
   timer.classList.remove("hide");
 });
