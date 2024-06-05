@@ -51,34 +51,19 @@ btnDificil.addEventListener(
 // TERMINAR JOGO
 btnTerminarJogo.addEventListener("click", () => {
   clearTimer();
-  jogo.classList.add("hide");
-  jogo.style["display"] = "none";
-  gridJogoFacil.classList.remove("hide");
-  gridJogoFacil.style["display"] = "none";
-  gridJogoDificil.classList.add("hide");
-  gridJogoDificil.style["display"] = "none";
-  ecraInicial.classList.remove("hide");
-
-  // clear game
-  pairsFound = 0;
-  primeiraCarta = null;
-  secundaCarta = null;
-  timeLeft = null;
-  cartas.forEach((carta) => {
-    carta.classList.remove("flip");
-    carta.classList.remove("matched");
-  });
+  clearGame();
+  hideGameAndGoToNextStage(ecraInicial);
 });
 
 // MENSAGEM VITÓRIA
 btnNovoJogoVitoria.addEventListener("click", () => {
-  clearGame();
+  hideGameAndGoToNextStage(dificuldade);
   mensagemVitoriaEl.classList.add("hide");
 });
 
 // MENSAGEM DERROTA
 btnNovoJogoDerrota.addEventListener("click", () => {
-  clearGame();
+  hideGameAndGoToNextStage(dificuldade);
   mensagemDerrotaEl.classList.add("hide");
 });
 
@@ -114,24 +99,16 @@ function timerInterval() {
   if (timeLeft <= 0) {
     // LOSE
     if (pairsFound < 3) {
+      clearGame();
       btnTerminarJogo.classList.add("hide");
       timer.classList.add("hide");
       mensagemDerrotaEl.classList.remove("hide");
-      cartas.forEach((carta) => {
-        carta.classList.remove("flip");
-        carta.classList.remove("matched");
-      });
     }
     clearTimer();
     return;
   }
   timeLeft--;
   timer.textContent = timeLeft;
-}
-
-function clearTimer() {
-  clearInterval(countDown);
-  // countDown = null;
 }
 
 function playGame($isGameModeFacil = true) {
@@ -211,13 +188,8 @@ function playGame($isGameModeFacil = true) {
 
             const timeoutWin = setTimeout(() => {
               mensagemVitoriaEl.classList.remove("hide");
-              btnTerminarJogo.classList.add("hide");
               timer.classList.add("hide");
-              // clear cards
-              cartas.forEach((carta) => {
-                carta.classList.remove("flip");
-                carta.classList.remove("matched");
-              });
+              clearGame();
               clearTimeout(timeoutWin);
             }, 2000);
           }
@@ -240,12 +212,51 @@ function playGame($isGameModeFacil = true) {
   });
 }
 
+// clearTimer();
+//   jogo.classList.add("hide");
+//   jogo.style["display"] = "none";
+//   gridJogoFacil.classList.remove("hide");
+//   gridJogoFacil.style["display"] = "none";
+//   gridJogoDificil.classList.add("hide");
+//   gridJogoDificil.style["display"] = "none";
+//   ecraInicial.classList.remove("hide");
+
+//   // clear game
+//   pairsFound = 0;
+//   primeiraCarta = null;
+//   secundaCarta = null;
+//   timeLeft = null;
+//   cartas.forEach((carta) => {
+//     carta.classList.remove("flip");
+//     carta.classList.remove("matched");
+//   });
+
+function hideGameAndGoToNextStage(next) {
+  // clearGame();
+  jogo.classList.add("hide");
+  jogo.style["display"] = "none";
+  gridJogoFacil.classList.add("hide");
+  gridJogoFacil.style["display"] = "none";
+  gridJogoDificil.classList.add("hide");
+  gridJogoDificil.style["display"] = "none";
+  // dificuldade.classList.remove("hide");
+  next.classList.remove("hide");
+}
+
 function clearGame() {
+  timeLeft = null;
+  countDown = null;
   pairsFound = 0;
   primeiraCarta = null;
   secundaCarta = null;
+
+  cartas.forEach((carta) => {
+    carta.classList.remove("flip");
+    carta.classList.remove("matched");
+  });
+}
+
+function clearTimer() {
   timeLeft = null;
-  jogo.classList.add("hide");
-  jogo.style["display"] = "none";
-  dificuldade.classList.remove("hide");
+  clearInterval(countDown);
 }
