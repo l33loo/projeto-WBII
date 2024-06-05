@@ -98,7 +98,7 @@ btnFacil.addEventListener(
             }, 100);
 
             // WIN
-            if (pairsFound === 3) {
+            if (pairsFound === cartas.length / 2) {
               clearTimer();
 
               const timeoutWin = setTimeout(() => {
