@@ -54,6 +54,7 @@ btnFacil.addEventListener(
       carta.addEventListener(
         "click",
         (event) => {
+          // Get other event listener in HTML file to be ignored
           event.stopPropagation();
 
           // Cannot unflip a card
@@ -82,12 +83,13 @@ btnFacil.addEventListener(
           // Second card is being flipped
           secundaCarta = carta;
 
-          // Both cards are a match
+          // The two cards are a match
           if (carta.classList.value === primeiraCarta.classList.value) {
             primeiraCarta.classList.add("matched");
             carta.classList.add("matched");
             pairsFound++;
 
+            // Don't let players flip new cards right away
             const timeoutMatched = setTimeout(() => {
               primeiraCarta = null;
               secundaCarta = null;
@@ -103,7 +105,7 @@ btnFacil.addEventListener(
                 mensagemVitoriaEl.classList.remove("hide");
                 btnTerminarJogo.classList.add("hide");
                 timer.classList.add("hide");
-                // clear game
+                // clear cards
                 cartas.forEach((carta) => {
                   carta.classList.remove("flip");
                   carta.classList.remove("matched");
@@ -116,7 +118,6 @@ btnFacil.addEventListener(
 
           // Cards are not a match
           const timeoutFlip = setTimeout(() => {
-            console.log("this is the third message");
             primeiraCarta.classList.remove("flip");
             carta.classList.remove("flip");
             primeiraCarta = null;
@@ -124,9 +125,8 @@ btnFacil.addEventListener(
 
             clearTimeout(timeoutFlip);
           }, 1200);
-
-          console.log("FLIP!");
         },
+        // Get other event listener in HTML file to be ignored
         true
       );
     });
@@ -149,8 +149,7 @@ btnTerminarJogo.addEventListener("click", () => {
   pairsFound = 0;
   primeiraCarta = null;
   secundaCarta = null;
-  // TODO: Maybe just target the latest game mode
-  // const cartas = document.querySelectorAll(".carta");
+  timeLeft = null;
   cartas.forEach((carta) => {
     carta.classList.remove("flip");
     carta.classList.remove("matched");
@@ -159,9 +158,11 @@ btnTerminarJogo.addEventListener("click", () => {
 
 // MENSAGEM VITÓRIA
 btnNovoJogoVitoria.addEventListener("click", () => {
+  // clear game
+  pairsFound = 0;
   primeiraCarta = null;
   secundaCarta = null;
-  pairsFound = 0;
+  timeLeft = null;
   jogo.classList.add("hide");
   jogo.style["display"] = "none";
   mensagemVitoriaEl.classList.add("hide");
@@ -172,9 +173,11 @@ btnNovoJogoVitoria.addEventListener("click", () => {
 
 // MENSAGEM DERROTA
 btnNovoJogoDerrota.addEventListener("click", () => {
+  // clear game
+  pairsFound = 0;
   primeiraCarta = null;
   secundaCarta = null;
-  pairsFound = 0;
+  timeLeft = null;
   jogo.classList.add("hide");
   jogo.style["display"] = "none";
   gridJogoFacil.classList.add("hide");
@@ -196,17 +199,9 @@ const shuffleArray = (array) => {
 };
 
 const timerInterval = () => {
-  console.log("TIMER!!!");
   if (timeLeft <= 0) {
+    // LOSE
     if (pairsFound < 3) {
-      // LOSE
-      // if ()
-      // const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
-      // btnNovoJogo.addEventListener("click", () => {
-      //   // clear game
-      //   pairsFound = 0;
-
-      // TODO: flip all cards, remove clock and btn
       btnTerminarJogo.classList.add("hide");
       timer.classList.add("hide");
       mensagemDerrotaEl.classList.remove("hide");
@@ -214,10 +209,6 @@ const timerInterval = () => {
         carta.classList.remove("flip");
         carta.classList.remove("matched");
       });
-
-      //   dificuldade.classList.toggle("hide");
-      // });
-      // }
     }
     clearTimer();
     return;
