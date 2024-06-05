@@ -3,12 +3,23 @@
 const btnNovoJogo = document.querySelector(".btn-novo-jogo");
 const ecraInicial = document.querySelector(".ecra-inicial");
 const dificuldade = document.querySelector(".dificuldade");
+const btnVoltar = document.querySelector(".btn-voltar");
+const btnFacil = document.querySelector(".btn-facil");
+const jogo = document.querySelector(".jogo");
+const gridJogoFacil = document.querySelector(".grid-jogo-facil");
+const gridJogoDificil = document.querySelector(".grid-jogo-dificil");
+const timer = document.querySelector(".timer");
+let cartas;
+let pairsFound = 0;
+let primeiraCarta;
+let secundaCarta;
+let timeLeft;
+let countDown;
 const btnTerminarJogo = document.querySelector(".btn-terminar-jogo");
 const mensagemVitoriaEl = document.querySelector(".mensagem-vitoria");
 const btnNovoJogoVitoria = mensagemVitoriaEl.querySelector("button");
 const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
 const btnNovoJogoDerrota = mensagemDerrotaEl.querySelector("button");
-let cartas;
 
 // ECRÃ INICIAL
 btnNovoJogo.addEventListener("click", () => {
@@ -17,24 +28,12 @@ btnNovoJogo.addEventListener("click", () => {
 });
 
 // ESCOLHA DA DIFICULDADE
-const btnVoltar = document.querySelector(".btn-voltar");
 btnVoltar.addEventListener("click", () => {
   dificuldade.classList.add("hide");
   ecraInicial.classList.remove("hide");
 });
 
-const jogo = document.querySelector(".jogo");
-const gridJogoFacil = document.querySelector(".grid-jogo-facil");
-const gridJogoDificil = document.querySelector(".grid-jogo-dificil");
-const timer = document.querySelector(".timer");
-let pairsFound = 0;
-let primeiraCarta;
-let secundaCarta;
-let timeLeft;
-let countDown;
-
 // Facil
-const btnFacil = document.querySelector(".btn-facil");
 btnFacil.addEventListener(
   "click",
   () => {
@@ -52,37 +51,38 @@ btnFacil.addEventListener(
     countDown = setInterval(timerInterval, 1000);
 
     cartas.forEach((carta) => {
-      // if (timeLeft <= 0) {
-      //   return;
-      // }
-
       carta.addEventListener(
         "click",
         (event) => {
           event.stopPropagation();
 
+          // Cannot unflip a card
           if (carta.classList.contains("flip")) {
             return;
           }
 
+          // Cannot flip other cards when two are already flipped
           if (!!primeiraCarta && !!secundaCarta) {
             return;
           }
 
+          // Cannot unflip a card that is part of a matched pair
           if (carta.classList.contains("matched")) {
-            console.log("CONTAINS `MATCHED`!!!");
             return;
           }
 
           carta.classList.toggle("flip");
 
+          // First card is being flipped
           if (!primeiraCarta) {
             primeiraCarta = carta;
             return;
           }
 
+          // Second card is being flipped
           secundaCarta = carta;
 
+          // Both cards are a match
           if (carta.classList.value === primeiraCarta.classList.value) {
             primeiraCarta.classList.add("matched");
             carta.classList.add("matched");
@@ -95,16 +95,11 @@ btnFacil.addEventListener(
               clearTimeout(timeoutMatched);
             }, 100);
 
+            // WIN
             if (pairsFound === 3) {
               clearTimer();
-              console.log(`WIN! pairs found: ${pairsFound}`);
-              //WIN!
 
-              //TODO: flip cards and hide timer and
-              // clearInterval(countDown);
               const timeoutWin = setTimeout(() => {
-                console.log("WIN!");
-                // gridJogoFacil.classList.toggle("hide");
                 mensagemVitoriaEl.classList.remove("hide");
                 btnTerminarJogo.classList.add("hide");
                 timer.classList.add("hide");
@@ -119,6 +114,7 @@ btnFacil.addEventListener(
             return;
           }
 
+          // Cards are not a match
           const timeoutFlip = setTimeout(() => {
             console.log("this is the third message");
             primeiraCarta.classList.remove("flip");
@@ -232,5 +228,5 @@ const timerInterval = () => {
 
 const clearTimer = () => {
   clearInterval(countDown);
-  countDown = null;
+  // countDown = null;
 };
