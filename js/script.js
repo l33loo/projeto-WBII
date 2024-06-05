@@ -8,6 +8,7 @@ const mensagemVitoriaEl = document.querySelector(".mensagem-vitoria");
 const btnNovoJogoVitoria = mensagemVitoriaEl.querySelector("button");
 const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
 const btnNovoJogoDerrota = mensagemDerrotaEl.querySelector("button");
+let cartas;
 
 // ECRÃ INICIAL
 btnNovoJogo.addEventListener("click", () => {
@@ -29,15 +30,16 @@ const timer = document.querySelector(".timer");
 let pairsFound = 0;
 let primeiraCarta;
 let secundaCarta;
+let timeLeft;
+let countDown;
 
 // Facil
 const btnFacil = document.querySelector(".btn-facil");
 btnFacil.addEventListener(
   "click",
   () => {
-    const cartas = gridJogoFacil.querySelectorAll(".carta");
+    cartas = gridJogoFacil.querySelectorAll(".carta");
     gridJogoFacil.append(...shuffleArray(cartas));
-    // const cartasShuffled = gridJogoFacil.querySelectorAll(".carta");
     dificuldade.classList.add("hide");
     jogo.classList.remove("hide");
     jogo.style["display"] = "flex";
@@ -45,38 +47,9 @@ btnFacil.addEventListener(
     gridJogoFacil.classList.remove("hide");
     gridJogoDificil.style["display"] = "none";
     // let timeLeft = 60;
-    let timeLeft = 15;
+    timeLeft = 15;
     timer.textContent = timeLeft;
-    const countDown = setInterval(() => {
-      console.log("TIMER!!!");
-      if (timeLeft <= 0) {
-        if (pairsFound < 3) {
-          // LOSE
-          // if ()
-          // const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
-          // btnNovoJogo.addEventListener("click", () => {
-          //   // clear game
-          //   pairsFound = 0;
-
-          // TODO: flip all cards, remove clock and btn
-          btnTerminarJogo.classList.add("hide");
-          timer.classList.add("hide");
-          mensagemDerrotaEl.classList.remove("hide");
-          cartas.forEach((carta) => {
-            carta.classList.remove("flip");
-            carta.classList.remove("matched");
-          });
-
-          //   dificuldade.classList.toggle("hide");
-          // });
-          // }
-        }
-        clearInterval(countDown);
-        return;
-      }
-      timeLeft--;
-      timer.textContent = timeLeft;
-    }, 1000);
+    countDown = setInterval(timerInterval, 1000);
 
     cartas.forEach((carta) => {
       // if (timeLeft <= 0) {
@@ -123,7 +96,7 @@ btnFacil.addEventListener(
             }, 100);
 
             if (pairsFound === 3) {
-              clearInterval(countDown);
+              clearTimer();
               console.log(`WIN! pairs found: ${pairsFound}`);
               //WIN!
 
@@ -167,6 +140,7 @@ btnFacil.addEventListener(
 
 // TERMINAR JOGO
 btnTerminarJogo.addEventListener("click", () => {
+  clearTimer();
   jogo.classList.add("hide");
   jogo.style["display"] = "none";
   gridJogoFacil.classList.remove("hide");
@@ -180,7 +154,7 @@ btnTerminarJogo.addEventListener("click", () => {
   primeiraCarta = null;
   secundaCarta = null;
   // TODO: Maybe just target the latest game mode
-  const cartas = document.querySelectorAll(".carta");
+  // const cartas = document.querySelectorAll(".carta");
   cartas.forEach((carta) => {
     carta.classList.remove("flip");
     carta.classList.remove("matched");
@@ -223,4 +197,40 @@ const shuffleArray = (array) => {
     newArray.push(array[j]);
   }
   return newArray;
+};
+
+const timerInterval = () => {
+  console.log("TIMER!!!");
+  if (timeLeft <= 0) {
+    if (pairsFound < 3) {
+      // LOSE
+      // if ()
+      // const btnNovoJogo = mensagemDerrotaEl.querySelector("button");
+      // btnNovoJogo.addEventListener("click", () => {
+      //   // clear game
+      //   pairsFound = 0;
+
+      // TODO: flip all cards, remove clock and btn
+      btnTerminarJogo.classList.add("hide");
+      timer.classList.add("hide");
+      mensagemDerrotaEl.classList.remove("hide");
+      cartas.forEach((carta) => {
+        carta.classList.remove("flip");
+        carta.classList.remove("matched");
+      });
+
+      //   dificuldade.classList.toggle("hide");
+      // });
+      // }
+    }
+    clearTimer();
+    return;
+  }
+  timeLeft--;
+  timer.textContent = timeLeft;
+};
+
+const clearTimer = () => {
+  clearInterval(countDown);
+  countDown = null;
 };
