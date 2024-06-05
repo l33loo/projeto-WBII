@@ -244,7 +244,6 @@ function hideGameAndGoToNextStage(next) {
 }
 
 function clearGame() {
-  timeLeft = null;
   countDown = null;
   pairsFound = 0;
   primeiraCarta = null;
