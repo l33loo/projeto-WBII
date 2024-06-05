@@ -72,38 +72,33 @@ btnTerminarJogo.addEventListener("click", () => {
 
 // MENSAGEM VITÓRIA
 btnNovoJogoVitoria.addEventListener("click", () => {
-  // clear game
-  pairsFound = 0;
-  primeiraCarta = null;
-  secundaCarta = null;
-  timeLeft = null;
-  jogo.classList.add("hide");
-  jogo.style["display"] = "none";
+  clearGame();
   mensagemVitoriaEl.classList.add("hide");
-  dificuldade.classList.remove("hide");
-  // TODO: make it disabled or hidden as soon as game is over
-  btnTerminarJogo.classList.remove("hide");
-  timer.classList.remove("hide");
 });
 
 // MENSAGEM DERROTA
 btnNovoJogoDerrota.addEventListener("click", () => {
-  // clear game
-  pairsFound = 0;
-  primeiraCarta = null;
-  secundaCarta = null;
-  timeLeft = null;
-  jogo.classList.add("hide");
-  jogo.style["display"] = "none";
-  gridJogoFacil.classList.add("hide");
-  gridJogoFacil.style["display"] = "none";
-  gridJogoDificil.classList.add("hide");
-  gridJogoDificil.style["display"] = "none";
+  clearGame();
   mensagemDerrotaEl.classList.add("hide");
-  dificuldade.classList.remove("hide");
-  btnTerminarJogo.classList.remove("hide");
-  timer.classList.remove("hide");
 });
+
+// () => {
+//   // clear game
+//   pairsFound = 0;
+//   primeiraCarta = null;
+//   secundaCarta = null;
+//   timeLeft = null;
+//   jogo.classList.add("hide");
+//   jogo.style["display"] = "none";
+//   gridJogoFacil.classList.add("hide");
+//   gridJogoFacil.style["display"] = "none";
+//   gridJogoDificil.classList.add("hide");
+//   gridJogoDificil.style["display"] = "none";
+//   mensagemDerrotaEl.classList.add("hide");
+//   dificuldade.classList.remove("hide");
+//   btnTerminarJogo.classList.remove("hide");
+//   timer.classList.remove("hide");
+// });
 
 // Durstenfeld shuffle
 function shuffleArray(array) {
@@ -134,10 +129,10 @@ function timerInterval() {
   timer.textContent = timeLeft;
 }
 
-const clearTimer = () => {
+function clearTimer() {
   clearInterval(countDown);
   // countDown = null;
-};
+}
 
 function playGame($isGameModeFacil = true) {
   const gridJogo = $isGameModeFacil ? gridJogoFacil : gridJogoDificil;
@@ -239,4 +234,17 @@ function playGame($isGameModeFacil = true) {
       true
     );
   });
+}
+
+function clearGame() {
+  pairsFound = 0;
+  primeiraCarta = null;
+  secundaCarta = null;
+  timeLeft = null;
+  jogo.classList.add("hide");
+  jogo.style["display"] = "none";
+  dificuldade.classList.remove("hide");
+  // TODO: make it disabled or hidden as soon as game is over
+  btnTerminarJogo.classList.remove("hide");
+  timer.classList.remove("hide");
 }
