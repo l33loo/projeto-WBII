@@ -67,30 +67,6 @@ btnNovoJogoDerrota.addEventListener("click", () => {
   mensagemDerrotaEl.classList.add("hide");
 });
 
-// Durstenfeld shuffle
-function shuffleArray(array) {
-  const shuffledArray = new Array();
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    shuffledArray.push(array[j]);
-  }
-  return shuffledArray;
-}
-
-function timerInterval() {
-  // LOSE
-  if (timeLeft <= 0 && pairsFound < cartas.length / 2) {
-    btnTerminarJogo.classList.add("hide");
-    timer.classList.add("hide");
-    mensagemDerrotaEl.classList.remove("hide");
-    resetCards();
-    clearTimer();
-    return;
-  }
-  timeLeft--;
-  timer.textContent = timeLeft;
-}
-
 function playGame($isGameModeFacil = true) {
   const gridJogo = $isGameModeFacil ? gridJogoFacil : gridJogoDificil;
   timeLeft = $isGameModeFacil ? 15 : 30;
@@ -111,7 +87,19 @@ function playGame($isGameModeFacil = true) {
   }
 
   timer.textContent = timeLeft;
-  countDown = setInterval(timerInterval, 1000);
+  countDown = setInterval(() => {
+    // LOSE
+    if (timeLeft <= 0 && pairsFound < cartas.length / 2) {
+      btnTerminarJogo.classList.add("hide");
+      timer.classList.add("hide");
+      mensagemDerrotaEl.classList.remove("hide");
+      resetCards();
+      clearTimer();
+      return;
+    }
+    timeLeft--;
+    timer.textContent = timeLeft;
+  }, 1000);
 
   cartas.forEach((carta) => {
     carta.addEventListener(
@@ -212,4 +200,14 @@ function resetCards() {
 function clearTimer() {
   timeLeft = null;
   clearInterval(countDown);
+}
+
+// Durstenfeld shuffle
+function shuffleArray(array) {
+  const shuffledArray = new Array();
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    shuffledArray.push(array[j]);
+  }
+  return shuffledArray;
 }
