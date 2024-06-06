@@ -70,7 +70,6 @@ btnNovoJogoDerrota.addEventListener("click", () => {
 // Functions
 function playGame($isGameModeFacil = true) {
   const gridJogo = $isGameModeFacil ? gridJogoFacil : gridJogoDificil;
-  timeLeft = $isGameModeFacil ? 15 : 30;
   cartas = $isGameModeFacil ? cartasFacil : cartasDificil;
   gridJogo.append(...shuffleArray(cartas));
   dificuldade.classList.add("hide");
@@ -87,6 +86,7 @@ function playGame($isGameModeFacil = true) {
     gridJogoFacil.style["display"] = "none";
   }
 
+  timeLeft = $isGameModeFacil ? 15 : 30;
   timer.textContent = timeLeft;
   countDown = setInterval(() => {
     // LOSE
