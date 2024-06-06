@@ -67,6 +67,7 @@ btnNovoJogoDerrota.addEventListener("click", () => {
   mensagemDerrotaEl.classList.add("hide");
 });
 
+// Functions
 function playGame($isGameModeFacil = true) {
   const gridJogo = $isGameModeFacil ? gridJogoFacil : gridJogoDificil;
   timeLeft = $isGameModeFacil ? 15 : 30;
