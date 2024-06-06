@@ -2,6 +2,8 @@
 
 const btnNovoJogo = document.querySelector(".btn-novo-jogo");
 const ecraInicial = document.querySelector(".ecra-inicial");
+// Fix typo in img src
+ecraInicial.querySelector(".logo-inicio").src = "img/Memodaw.png";
 const dificuldade = document.querySelector(".dificuldade");
 const btnVoltar = document.querySelector(".btn-voltar");
 const btnFacil = document.querySelector(".btn-facil");
@@ -36,10 +38,10 @@ btnVoltar.addEventListener("click", () => {
   ecraInicial.classList.remove("hide");
 });
 
-// Facil
+// JOGO FÁCIL
 btnFacil.addEventListener("click", playGame, true);
 
-// Dificil
+// JOGO DIFÍCIL
 btnDificil.addEventListener(
   "click",
   () => {
@@ -86,7 +88,7 @@ function playGame($isGameModeFacil = true) {
     gridJogoFacil.style["display"] = "none";
   }
 
-  timeLeft = $isGameModeFacil ? 15 : 30;
+  timeLeft = $isGameModeFacil ? 60 : 30;
   timer.textContent = timeLeft;
   countDown = setInterval(() => {
     // LOSE
