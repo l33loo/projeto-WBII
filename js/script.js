@@ -73,8 +73,7 @@ btnNovoJogoDerrota.addEventListener("click", () => {
 function playGame($isGameModeFacil = true) {
   const gridJogo = $isGameModeFacil ? gridJogoFacil : gridJogoDificil;
   cartas = $isGameModeFacil ? cartasFacil : cartasDificil;
-  // Shuffle the cards
-  gridJogo.append(...shuffleArray(cartas));
+  shuffleCards(cartas);
   dificuldade.classList.add("hide");
   jogo.classList.remove("hide");
   jogo.style["display"] = "flex";
@@ -202,11 +201,8 @@ function clearTimer() {
 }
 
 // Durstenfeld shuffle
-function shuffleArray(array) {
-  const shuffledArray = new Array();
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    shuffledArray.push(array[j]);
+function shuffleCards(cards) {
+  for (let i = cards.length - 1; i > 0; i--) {
+    cards[i].style.order = Math.floor(Math.random() * (i + 1));
   }
-  return shuffledArray;
 }
