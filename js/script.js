@@ -121,7 +121,7 @@ function playGame($isGameModeFacil = true) {
           return;
         }
 
-        carta.classList.toggle("flip");
+        carta.classList.add("flip");
 
         // First card is being flipped
         if (!primeiraCarta) {
