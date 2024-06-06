@@ -2,8 +2,6 @@
 
 const btnNovoJogo = document.querySelector(".btn-novo-jogo");
 const ecraInicial = document.querySelector(".ecra-inicial");
-// Fix typo in img src
-ecraInicial.querySelector(".logo-inicio").src = "img/Memodaw.png";
 const dificuldade = document.querySelector(".dificuldade");
 const btnVoltar = document.querySelector(".btn-voltar");
 const btnFacil = document.querySelector(".btn-facil");
@@ -27,6 +25,8 @@ let timeLeft;
 let countDown;
 
 // ECRÃ INICIAL
+// Fix typo in img src
+ecraInicial.querySelector(".logo-inicio").src = "img/Memodaw.png";
 btnNovoJogo.addEventListener("click", () => {
   ecraInicial.classList.add("hide");
   dificuldade.classList.remove("hide");
@@ -73,6 +73,7 @@ btnNovoJogoDerrota.addEventListener("click", () => {
 function playGame($isGameModeFacil = true) {
   const gridJogo = $isGameModeFacil ? gridJogoFacil : gridJogoDificil;
   cartas = $isGameModeFacil ? cartasFacil : cartasDificil;
+  // Shuffle the cards
   gridJogo.append(...shuffleArray(cartas));
   dificuldade.classList.add("hide");
   jogo.classList.remove("hide");
