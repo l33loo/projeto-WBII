@@ -190,8 +190,7 @@ function clearGameAndGoToNextStage(next) {
 
 function resetCards() {
   cartas.forEach((carta) => {
-    carta.classList.remove("flip");
-    carta.classList.remove("matched");
+    carta.classList.remove("flip", "matched");
   });
 }
 
