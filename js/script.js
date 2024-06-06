@@ -51,19 +51,18 @@ btnDificil.addEventListener(
 // TERMINAR JOGO
 btnTerminarJogo.addEventListener("click", () => {
   clearTimer();
-  clearGame();
-  hideGameAndGoToNextStage(ecraInicial);
+  clearGameAndGoToNextStage(ecraInicial);
 });
 
 // MENSAGEM VITÓRIA
 btnNovoJogoVitoria.addEventListener("click", () => {
-  hideGameAndGoToNextStage(dificuldade);
+  clearGameAndGoToNextStage(dificuldade);
   mensagemVitoriaEl.classList.add("hide");
 });
 
 // MENSAGEM DERROTA
 btnNovoJogoDerrota.addEventListener("click", () => {
-  hideGameAndGoToNextStage(dificuldade);
+  clearGameAndGoToNextStage(dificuldade);
   mensagemDerrotaEl.classList.add("hide");
 });
 
@@ -96,14 +95,12 @@ function shuffleArray(array) {
 }
 
 function timerInterval() {
-  if (timeLeft <= 0) {
-    // LOSE
-    if (pairsFound < 3) {
-      clearGame();
-      btnTerminarJogo.classList.add("hide");
-      timer.classList.add("hide");
-      mensagemDerrotaEl.classList.remove("hide");
-    }
+  // LOSE
+  if (timeLeft <= 0 && pairsFound < cartas.length / 2) {
+    btnTerminarJogo.classList.add("hide");
+    timer.classList.add("hide");
+    mensagemDerrotaEl.classList.remove("hide");
+    resetCards();
     clearTimer();
     return;
   }
@@ -189,7 +186,7 @@ function playGame($isGameModeFacil = true) {
             const timeoutWin = setTimeout(() => {
               mensagemVitoriaEl.classList.remove("hide");
               timer.classList.add("hide");
-              clearGame();
+              resetCards();
               clearTimeout(timeoutWin);
             }, 2000);
           }
@@ -231,8 +228,17 @@ function playGame($isGameModeFacil = true) {
 //     carta.classList.remove("matched");
 //   });
 
-function hideGameAndGoToNextStage(next) {
+function clearGameAndGoToNextStage(next) {
   // clearGame();
+  countDown = null;
+  pairsFound = 0;
+  primeiraCarta = null;
+  secundaCarta = null;
+
+  // cartas.forEach((carta) => {
+  //   carta.classList.remove("flip");
+  //   carta.classList.remove("matched");
+  // });
   jogo.classList.add("hide");
   jogo.style["display"] = "none";
   gridJogoFacil.classList.add("hide");
@@ -243,12 +249,14 @@ function hideGameAndGoToNextStage(next) {
   next.classList.remove("hide");
 }
 
-function clearGame() {
-  countDown = null;
-  pairsFound = 0;
-  primeiraCarta = null;
-  secundaCarta = null;
+// function clearGame() {
+//   countDown = null;
+//   pairsFound = 0;
+//   primeiraCarta = null;
+//   secundaCarta = null;
+// }
 
+function resetCards() {
   cartas.forEach((carta) => {
     carta.classList.remove("flip");
     carta.classList.remove("matched");
