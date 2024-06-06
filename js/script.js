@@ -69,12 +69,12 @@ btnNovoJogoDerrota.addEventListener("click", () => {
 
 // Durstenfeld shuffle
 function shuffleArray(array) {
-  const newArray = new Array();
+  const shuffledArray = new Array();
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    newArray.push(array[j]);
+    shuffledArray.push(array[j]);
   }
-  return newArray;
+  return shuffledArray;
 }
 
 function timerInterval() {
