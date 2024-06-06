@@ -140,11 +140,9 @@ function playGame($isGameModeFacil = true) {
           pairsFound++;
 
           // Don't let players flip new cards right away
-          const timeoutMatched = setTimeout(() => {
+          setTimeout(() => {
             primeiraCarta = null;
             secundaCarta = null;
-
-            clearTimeout(timeoutMatched);
           }, 100);
 
           // WIN
@@ -152,24 +150,21 @@ function playGame($isGameModeFacil = true) {
             clearTimer();
             btnTerminarJogo.classList.add("hide");
 
-            const timeoutWin = setTimeout(() => {
+            setTimeout(() => {
               mensagemVitoriaEl.classList.remove("hide");
               timer.classList.add("hide");
               resetCards();
-              clearTimeout(timeoutWin);
             }, 2000);
           }
           return;
         }
 
         // Cards are not a match
-        const timeoutFlip = setTimeout(() => {
+        setTimeout(() => {
           primeiraCarta.classList.remove("flip");
           carta.classList.remove("flip");
           primeiraCarta = null;
           secundaCarta = null;
-
-          clearTimeout(timeoutFlip);
         }, 1200);
       },
       // Get other event listener in HTML file to be ignored
