@@ -12,17 +12,17 @@ const cartasFacil = gridJogoFacil.querySelectorAll(".carta");
 const gridJogoDificil = document.querySelector(".grid-jogo-dificil");
 const cartasDificil = gridJogoDificil.querySelectorAll(".carta");
 const timer = document.querySelector(".timer");
+const btnTerminarJogo = document.querySelector(".btn-terminar-jogo");
+const mensagemVitoriaEl = document.querySelector(".mensagem-vitoria");
+const btnNovoJogoVitoria = mensagemVitoriaEl.querySelector("button");
+const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
+const btnNovoJogoDerrota = mensagemDerrotaEl.querySelector("button");
 let cartas;
 let pairsFound = 0;
 let primeiraCarta;
 let secundaCarta;
 let timeLeft;
 let countDown;
-const btnTerminarJogo = document.querySelector(".btn-terminar-jogo");
-const mensagemVitoriaEl = document.querySelector(".mensagem-vitoria");
-const btnNovoJogoVitoria = mensagemVitoriaEl.querySelector("button");
-const mensagemDerrotaEl = document.querySelector(".mensagem-derrota");
-const btnNovoJogoDerrota = mensagemDerrotaEl.querySelector("button");
 
 // ECRÃ INICIAL
 btnNovoJogo.addEventListener("click", () => {
