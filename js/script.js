@@ -51,6 +51,7 @@ btnDificil.addEventListener(
 // TERMINAR JOGO
 btnTerminarJogo.addEventListener("click", () => {
   clearTimer();
+  resetCards();
   clearGameAndGoToNextStage(ecraInicial);
 });
 
@@ -65,24 +66,6 @@ btnNovoJogoDerrota.addEventListener("click", () => {
   clearGameAndGoToNextStage(dificuldade);
   mensagemDerrotaEl.classList.add("hide");
 });
-
-// () => {
-//   // clear game
-//   pairsFound = 0;
-//   primeiraCarta = null;
-//   secundaCarta = null;
-//   timeLeft = null;
-//   jogo.classList.add("hide");
-//   jogo.style["display"] = "none";
-//   gridJogoFacil.classList.add("hide");
-//   gridJogoFacil.style["display"] = "none";
-//   gridJogoDificil.classList.add("hide");
-//   gridJogoDificil.style["display"] = "none";
-//   mensagemDerrotaEl.classList.add("hide");
-//   dificuldade.classList.remove("hide");
-//   btnTerminarJogo.classList.remove("hide");
-//   timer.classList.remove("hide");
-// });
 
 // Durstenfeld shuffle
 function shuffleArray(array) {
@@ -118,7 +101,6 @@ function playGame($isGameModeFacil = true) {
   jogo.style["display"] = "flex";
   gridJogo.style["display"] = "grid";
   gridJogo.classList.remove("hide");
-  // TODO: make it disabled or hidden as soon as game is over
   btnTerminarJogo.classList.remove("hide");
   timer.classList.remove("hide");
 
@@ -145,11 +127,6 @@ function playGame($isGameModeFacil = true) {
 
         // Cannot flip other cards when two are already flipped
         if (!!primeiraCarta && !!secundaCarta) {
-          return;
-        }
-
-        // Cannot unflip a card that is part of a matched pair
-        if (carta.classList.contains("matched")) {
           return;
         }
 
@@ -209,52 +186,21 @@ function playGame($isGameModeFacil = true) {
   });
 }
 
-// clearTimer();
-//   jogo.classList.add("hide");
-//   jogo.style["display"] = "none";
-//   gridJogoFacil.classList.remove("hide");
-//   gridJogoFacil.style["display"] = "none";
-//   gridJogoDificil.classList.add("hide");
-//   gridJogoDificil.style["display"] = "none";
-//   ecraInicial.classList.remove("hide");
-
-//   // clear game
-//   pairsFound = 0;
-//   primeiraCarta = null;
-//   secundaCarta = null;
-//   timeLeft = null;
-//   cartas.forEach((carta) => {
-//     carta.classList.remove("flip");
-//     carta.classList.remove("matched");
-//   });
-
 function clearGameAndGoToNextStage(next) {
-  // clearGame();
   countDown = null;
   pairsFound = 0;
   primeiraCarta = null;
   secundaCarta = null;
 
-  // cartas.forEach((carta) => {
-  //   carta.classList.remove("flip");
-  //   carta.classList.remove("matched");
-  // });
   jogo.classList.add("hide");
   jogo.style["display"] = "none";
   gridJogoFacil.classList.add("hide");
   gridJogoFacil.style["display"] = "none";
   gridJogoDificil.classList.add("hide");
   gridJogoDificil.style["display"] = "none";
-  // dificuldade.classList.remove("hide");
+
   next.classList.remove("hide");
 }
-
-// function clearGame() {
-//   countDown = null;
-//   pairsFound = 0;
-//   primeiraCarta = null;
-//   secundaCarta = null;
-// }
 
 function resetCards() {
   cartas.forEach((carta) => {
