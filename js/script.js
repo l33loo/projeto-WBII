@@ -203,6 +203,8 @@ function clearTimer() {
 // Durstenfeld shuffle
 function shuffleCards(cards) {
   for (let i = cards.length - 1; i > 0; i--) {
-    cards[i].style.order = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random() * (i + 1));
+    cards[i].style.order = j;
+    cards[j].style.order = i;
   }
 }
